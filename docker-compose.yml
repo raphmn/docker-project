@@ -20,6 +20,7 @@ services:
     ports:
       - '81:81'
       - '82:82'
+      - '83:83'
     volumes:
     - './reverse-proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
 
@@ -34,6 +35,14 @@ services:
     image: raphmn/flask-api:latest
     networks:
       - reverse_proxy_network
+
+  flask-stripe:
+    restart: always
+    image: raphmn/stripe-flask:latest
+    networks:
+      - reverse_proxy_network
+    env_file:
+      - .env
 
 networks:
   frontend_network:
