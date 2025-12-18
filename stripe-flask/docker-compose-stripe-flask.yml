@@ -1,10 +1,10 @@
-version: "3.8"
-
 services:
-  flask-api:
-    image: raphmn/flask-api:latest
+  stripe-flask:
+    image: raphmn/stripe-flask:latest
     restart: always
-
+    env_file:
+      - ../.env
+    
     networks:
       - reverse_proxy_network
 

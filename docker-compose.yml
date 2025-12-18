@@ -1,51 +1,16 @@
 version: '3.8'
-services:
 
-  static-webapp:
-    restart: always
-    image: nginx:alpine-slim
-    ports:
-      - '80:8001'
-    networks:
-      - frontend_network
-    volumes:
-      - './static-webapp:/usr/share/nginx/html:ro'
-      - './static-webapp/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
-
-  reverse-proxy:
-    restart: always
-    image: nginx:alpine-slim
-    networks:
-      - reverse_proxy_network
-    ports:
-      - '81:81'
-      - '82:82'
-      - '83:83'
-    volumes:
-    - './reverse-proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro'
-
-  flask-frontend:
-    restart: always
-    image: raphmn/flask-front:latest
-    networks:
-      - reverse_proxy_network
-
-  flask-api:
-    restart: always
-    image: raphmn/flask-api:latest
-    networks:
-      - reverse_proxy_network
-
-  stripe-flask:
-    restart: always
-    image: raphmn/stripe-flask:latest
-    networks:
-      - reverse_proxy_network
-    env_file:
-      - .env
+include:
+  - ./static-webapp/docker-compose-static-webapp.yml
+  - ./reverse-proxy/docker-compose-reverse-proxy.yml
+  - ./flask-front/docker-compose-flask-front.yml
+  - ./flask-api/docker-compose-flask-api.yml
+  - ./stripe-flask/docker-compose-stripe-flask.yml
 
 networks:
   frontend_network:
+    name: frontend_network
     driver: bridge
   reverse_proxy_network:
+    name: reverse_proxy_network
     driver: bridge
