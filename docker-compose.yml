@@ -36,7 +36,7 @@ services:
     networks:
       - reverse_proxy_network
 
-  flask-stripe:
+  stripe-flask:
     restart: always
     image: raphmn/stripe-flask:latest
     networks:

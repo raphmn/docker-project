@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 4003
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:4003", "app:app"]
