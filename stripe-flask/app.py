@@ -56,6 +56,3 @@ def cancel():
         <h1 style='color:red; text-align:center;'>Paiement annulé. ❌</h1>
     </body>
     '''
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=4003)
