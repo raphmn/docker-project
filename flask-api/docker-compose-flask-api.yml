@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  flask-api:
+    image: raphmn/flask-api:latest
+    restart: always
+    container_name: flask-api
+    networks:
+      - backend_network
+    ports:
+      - '81:4001'
+
+networks:
+  backend_network:
+    name: backend_network
+    driver: bridge

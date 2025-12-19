@@ -1,0 +1,16 @@
+services:
+  stripe-flask:
+    image: raphmn/stripe-flask:latest
+    restart: always
+    env_file:
+      - ../.env
+    container_name: stripe-flask
+    networks:
+      - frontend_network
+    ports:
+      - '83:4003'
+
+networks:
+  frontend_network:
+    name: frontend_network
+    driver: bridge

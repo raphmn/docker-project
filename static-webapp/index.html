@@ -27,7 +27,7 @@ html, body {
     height: 100%;
     display: grid;
     grid-template-columns: repeat(2, 240px);
-    grid-template-rows: repeat(2, 140px);
+    grid-template-rows: auto;
     gap: 32px;
     place-content: center;
     perspective: 1000px;
@@ -54,7 +54,25 @@ html, body {
     justify-content: center;
     align-items: center;
     transform-style: preserve-3d;
-    transition: transform 0.12s ease-out, border-color 0.2s ease, background 0.2s ease;
+    transition: transform 0.12s ease-out, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card.netdata {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 200px;
+    height: 50px;
+    background: #2ecc71;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+}
+
+.card.netdata:hover {
+    background: #27ae60;
+    box-shadow: 0 15px 25px rgba(46, 204, 113, 0.5);
 }
 
 .card span {
@@ -70,7 +88,9 @@ html, body {
 @media (max-width: 600px) {
     #card-container {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
+    }
+    .card {
+        width: 280px;
     }
 }
 </style>
@@ -85,6 +105,8 @@ const sites = [
     { name: "Application API", url: ":81/" },
     { name: "Frontend", url: ":82/" },
     { name: "App stripe", url: ":83/" },
+    { name: "PART2 Ecommerce", url: ":84/" },
+    { name: "NETDATA", url: ":19999/", specialClass: "netdata" }
 ];
 
 const container = document.getElementById("card-container");
@@ -95,6 +117,7 @@ sites.forEach(site => {
     card.href = `http://${hostname}${site.url}`;
     card.target = "_blank";
     card.className = "card";
+    if (site.specialClass) card.classList.add(site.specialClass);
 
     const text = document.createElement("span");
     text.textContent = site.name;
@@ -110,7 +133,7 @@ sites.forEach(site => {
         const rx = (-y / r.height) * 14;
         const ry = (x / r.width) * 14;
 
-        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale(1.07)`;
+        card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale(1.05)`;
     });
 
     card.addEventListener("mouseleave", () => {
