@@ -10,6 +10,7 @@ services:
       - "82:82"
       - "83:83"
       - "84:84"
+      - "19999:19999"
     volumes:
 
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

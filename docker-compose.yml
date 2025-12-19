@@ -43,6 +43,33 @@ services:
       - stripe-flask
       - rocket-ecommerce
 
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    pid: host
+    networks:
+      - reverse_proxy_network
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /:/host/root:ro,rslave
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/log:/host/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /run/dbus:/run/dbus:ro
+
 networks:
   db_network:
     name: db_network
@@ -53,3 +80,8 @@ networks:
   reverse_proxy_network:
     name: reverse_proxy_network
     driver: bridge
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
