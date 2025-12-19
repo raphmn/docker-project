@@ -3,9 +3,34 @@ version: '3.8'
 include:
   - ./static-webapp/docker-compose-static-webapp.yml
   - ./reverse-proxy/docker-compose-reverse-proxy.yml
-  - ./flask-front/docker-compose-flask-front.yml
-  - ./flask-api/docker-compose-flask-api.yml
-  - ./stripe-flask/docker-compose-stripe-flask.yml
+
+services:
+  flask-api:
+    image: raphmn/flask-api:latest
+    restart: always
+    container_name: flask-api
+    networks:
+      - reverse_proxy_network
+
+  flask-front:
+    image: raphmn/flask-front:latest
+    restart: always
+    container_name: flask-front
+    networks:
+      - reverse_proxy_network
+
+  stripe-flask:
+    image: raphmn/stripe-flask:latest
+    restart: always
+    container_name: stripe-flask
+    networks:
+      - reverse_proxy_network
+    
+  reverse-proxy:
+    depends_on:
+      - flask-front
+      - flask-api
+      - stripe-flask
 
 networks:
   frontend_network:

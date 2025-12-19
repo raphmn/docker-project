@@ -4,11 +4,13 @@ services:
   flask-api:
     image: raphmn/flask-api:latest
     restart: always
-
+    container_name: flask-api
     networks:
-      - reverse_proxy_network
+      - backend_network
+    ports:
+      - '81:4001'
 
 networks:
-  reverse_proxy_network:
-    name: reverse_proxy_network
+  backend_network:
+    name: backend_network
     driver: bridge

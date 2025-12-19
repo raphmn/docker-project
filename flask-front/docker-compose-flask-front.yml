@@ -2,13 +2,15 @@ version: "3.8"
 
 services:
   flask-front:
-
     image: raphmn/flask-front:latest
     restart: always
+    container_name: flask-front
     networks:
-      - reverse_proxy_network
+      - frontend_network
+    ports:
+      - '82:4002'
 
 networks:
-  reverse_proxy_network:
-    name: reverse_proxy_network
+  frontend_network:
+    name: frontend_network
     driver: bridge

@@ -4,11 +4,13 @@ services:
     restart: always
     env_file:
       - ../.env
-    
+    container_name: stripe-flask
     networks:
-      - reverse_proxy_network
+      - frontend_network
+    ports:
+      - '83:4003'
 
 networks:
-  reverse_proxy_network:
-    name: reverse_proxy_network
+  frontend_network:
+    name: frontend_network
     driver: bridge
